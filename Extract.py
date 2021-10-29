@@ -296,10 +296,10 @@ def createCsv(filePath,pathtype):
 
     temp=[]
     temp.append("外规类别")
-    temp.append(None)
-    temp.append(None)
-    temp.append(None)
-    temp.append(None)
+    temp.append(pathtype)
+    temp.append("手工选择")
+    temp.append("字符串型")
+    temp.append("是")
     temp.append(None)
     rows.append(temp)
 
