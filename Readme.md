@@ -8,7 +8,7 @@ Appendixlist.txt存放的是所有附件的文件名字
 
 FilesList.txt存放的是所有正文文件的名字
 
-Spider.py是爬虫代码。主要实现从网站上爬取所需的四个类别的文件到本地，再从本地上传的阿里云oss中。（该文件需要配置环境，参考链接[Python selenium + chromedriver 爬取数据_石榴笑了的博客-CSDN博客](https://blog.csdn.net/weixin_42947716/article/details/103398015)）
+Spider.py是爬虫代码。主要实现从网站上爬取所需的四个类别的文件到本地，再从本地上传的阿里云oss中。由于linux和windows的系统差异，所以本项目中的Spider.py是只适用于windows，而适用于Linux版本的Spider.py则在webservice的server项目中，两者略有差异。（该文件需要配置环境，参考链接[Python selenium + chromedriver 爬取数据_石榴笑了的博客-CSDN博客](https://blog.csdn.net/weixin_42947716/article/details/103398015)）
 
 DownloadFromOss.py是将初步爬下来的原始文件下载到本地的Files文件夹中
 
