@@ -182,11 +182,11 @@ def getWorkDate(filePath,content):
             a=content[temp_index]
             temp_index-=1
             if(index-temp_index<=10):
-                print("找不到实施日期")
+                # print("找不到实施日期")
                 return None
         date=content[temp_index+1:index]
     else:
-        print("找不到实施日期")
+        # print("找不到实施日期")
         return None
     if(date==''):
         print(filePath)
@@ -216,11 +216,11 @@ def getClaimDate(content):
                         end+=1
                     date=content[start:end+1]
                     if (len(date)>11):
-                        print("找不到发布日期")
+                        # print("找不到发布日期")
                         return None
                     return date
         except IndexError:
-            print("找不到发布日期")
+            # print("找不到发布日期")
             return None
     return None
 def writeCsv(filePath,rows):
@@ -259,6 +259,30 @@ def readDoc(filePath):
     doc.Close()
     word.Quit()
 
+#读取附件
+def getAppendix(content):
+
+    appendixs=""
+    if content==None :
+        return None
+    try:
+        length=len(content)
+        end=5
+        while(end<=len(content)):
+            if(content[end-4:end]==".pdf" or content[end-4:end]==".doc"):
+                if(end<length and content[end]=="x"):
+                    end+=1
+                start=end-1
+                while(content[start]!="\n"  and start>=0):
+                    temp = content[start:end]
+                    start-=1
+
+                appendixs=appendixs+content[start+1:end]+"\n"
+            end+=1
+        return appendixs
+    except:
+        return None
+
 
 def readFile(filePath):
     if (filePath.endswith("txt")):
@@ -271,7 +295,7 @@ def readFile(filePath):
     #     return None
 
 def createCsv(filePath,pathtype):
-    # print(filePath)
+    print(filePath)
     fileName=filePath.split("\\")[-1].split(".")[0]
     content=readFile(filePath)
     rows=[]
@@ -325,8 +349,8 @@ def createCsv(filePath,pathtype):
     temp=[]
     temp.append("发布日期")
     claim_date=getClaimDate(content)
-    print("发布日期:")
-    print(claim_date)
+    # print("发布日期:")
+    # print(claim_date)
     temp.append(claim_date)
     temp.append("选择录入")
     temp.append("字符串型")
@@ -337,8 +361,8 @@ def createCsv(filePath,pathtype):
     temp=[]
     temp.append("实施日期")
     work_date=getWorkDate(filePath,content)
-    print("实施日期")
-    print(work_date)
+    # print("实施日期")
+    # print(work_date)
     if(work_date==None and claim_date!=None):
         work_date=claim_date
     temp.append(work_date)
@@ -399,6 +423,18 @@ def createCsv(filePath,pathtype):
     temp.append("内化状态")
     for i in range(0,5):
         temp.append(0)
+    rows.append(temp)
+
+    temp=[]
+    temp.append("附件")
+    nameAppendixs=getAppendix(content)
+    temp.append(nameAppendixs)
+    if(nameAppendixs!=None):
+        print("附件名："+nameAppendixs)
+    temp.append(None)
+    temp.append(None)
+    temp.append(None)
+    temp.append(None)
     rows.append(temp)
 
     writeCsv(resPath +pathtype+"\\"+fileName + ".csv", rows)
